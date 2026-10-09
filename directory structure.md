@@ -1,7 +1,8 @@
 lib
 ├─ api         # 存放请求
 ├─ assets      # 存放资源      
-├─ components  # 存放公共组件                 
+├─ components  # 存放公共组件  
+     ├─          
 ├─ contants    #存放常量文件             
 ├─ viewmodels  #存放类型文件
 ├─ pages       #存放页面

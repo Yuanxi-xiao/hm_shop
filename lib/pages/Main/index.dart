@@ -62,7 +62,7 @@ int _currentIndex = 0;
       //safeArea避开安全区组件
       body: SafeArea(child: IndexedStack(
         index: _currentIndex,
-        children: _getChildren(), //防止几个组件
+        children: _getChildren(), //放置几个组件
       )), 
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
