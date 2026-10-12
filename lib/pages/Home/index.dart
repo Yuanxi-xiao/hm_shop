@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:hm_shop/api/home.dart';
 import 'package:hm_shop/components/Home/Category.dart';
 import 'package:hm_shop/components/Home/Hot.dart';
@@ -40,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
       SliverToBoxAdapter(child: Category(categorylist: _categorylist,)),//分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
 
-      SliverToBoxAdapter(child: Suggestion(),),//推荐组件
+      SliverToBoxAdapter(child: Suggestion(recommendItem: recommendItem,)),//推荐组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
 
       SliverToBoxAdapter(
@@ -61,12 +63,16 @@ class _HomeViewState extends State<HomeView> {
     ];
   }
 
+  //封裝推荐
+  RecommendItem recommendItem = RecommendItem(id: "", title: "", subTypes: []);
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getBannderList();
     _getCategoryList();
+    _getRecommendList();
   }
   
   //获取轮播图列表
@@ -81,6 +87,14 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+  //获取特惠推荐（线上明细接口已下线，改用本地JSON）
+  void _getRecommendList() async{
+    final str = await rootBundle.loadString('lib/viewmodels/特惠推荐.json');
+    final data = json.decode(str) as Map<String, dynamic>;
+    recommendItem = RecommendItem.formJSON(data["result"] as Map<String, dynamic>);
+    if (!mounted) return;
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: _getScrollChilden());

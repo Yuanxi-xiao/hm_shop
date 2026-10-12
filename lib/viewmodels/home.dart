@@ -101,3 +101,107 @@ class CategoryItem{
     );
   }
 }
+
+//特惠推荐（顶部容器：id + title + 二级分类列表）
+class RecommendItem{
+  String id;
+  String title;
+  List<SubTypeItem> subTypes;
+  RecommendItem({
+    required this.id,
+    required this.title,
+    required this.subTypes,
+  });
+
+  factory RecommendItem.formJSON(Map <String, dynamic> json){
+    return RecommendItem(
+      id: json["id"] ?? "",
+      title: json["title"] ?? "",
+      subTypes: json["subTypes"] == null
+        ? []
+        : (json["subTypes"] as List)
+          .map((item) => SubTypeItem.formJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
+
+//二级分类（抢先尝鲜 / 新品预告）
+class SubTypeItem{
+  String id;
+  String title;
+  GoodsPage goodsItems;
+  SubTypeItem({
+    required this.id,
+    required this.title,
+    required this.goodsItems,
+  });
+
+  factory SubTypeItem.formJSON(Map <String, dynamic> json){
+    return SubTypeItem(
+      id: json["id"] ?? "",
+      title: json["title"] ?? "",
+      goodsItems: GoodsPage.formJSON(
+        (json["goodsItems"] ?? <String, dynamic>{}) as Map<String, dynamic>),
+    );
+  }
+}
+
+//商品分页容器
+class GoodsPage{
+  int counts;
+  int pageSize;
+  int pages;
+  int page;
+  List<GoodsItem> items;
+  GoodsPage({
+    required this.counts,
+    required this.pageSize,
+    required this.pages,
+    required this.page,
+    required this.items,
+  });
+
+  factory GoodsPage.formJSON(Map <String, dynamic> json){
+    return GoodsPage(
+      counts: json["counts"] ?? 0,
+      pageSize: json["pageSize"] ?? 0,
+      pages: json["pages"] ?? 0,
+      page: json["page"] ?? 0,
+      items: json["items"] == null
+        ? []
+        : (json["items"] as List)
+          .map((item) => GoodsItem.formJSON(item as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+}
+
+//单个商品
+class GoodsItem{
+  String id;
+  String name;
+  String desc;
+  String price;
+  String picture;
+  int orderNum;
+  GoodsItem({
+    required this.id,
+    required this.name,
+    required this.desc,
+    required this.price,
+    required this.picture,
+    required this.orderNum,
+  });
+
+  factory GoodsItem.formJSON(Map <String, dynamic> json){
+    return GoodsItem(
+      id: json["id"] ?? "",
+      name: json["name"] ?? "",
+      desc: json["desc"] ?? "",
+      price: json["price"] ?? "",
+      picture: json["picture"] ?? "",
+      orderNum: json["orderNum"] ?? 0,
+    );
+  }
+}

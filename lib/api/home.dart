@@ -17,3 +17,9 @@ Future<List<CategoryItem>> getCategoryListAPI () async{
     return CategoryItem.formJSON(item as Map<String,dynamic>);
   }).toList();
 }
+
+//特惠推荐
+Future<RecommendItem> getRecommendListAPI () async{
+  //返回请求
+  return RecommendItem.formJSON(await diorequest.get(HttpConstants.RECOMMEND_LIST));
+}
